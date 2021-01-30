@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:instagram/models/user_model.dart';
+import 'package:instagram/services/database_service.dart';
 
 class EditProfileScreen extends StatefulWidget {
 
   final User user;
+  final Function updateUser;
 
   EditProfileScreen({
-    this.user
+    this.user,
+    this.updateUser,
   });
 
   @override
@@ -37,6 +40,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         bio: _bio,
       );
       //Database update
+      DatabaseService.updateUser(user);
+      widget.updateUser(user);
 
       Navigator.pop(context);
     }

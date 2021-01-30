@@ -16,7 +16,7 @@ class AuthService{
            'name': name,
             'profileImageUrl': '',
          });
-         Navigator.pushReplacementNamed(context, HomeScreen.id);
+        Navigator.pop(context);
       }
     }catch(e){
       print(e);

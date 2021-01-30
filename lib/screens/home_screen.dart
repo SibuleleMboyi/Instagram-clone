@@ -8,7 +8,6 @@ import 'package:instagram/screens/search_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
-  static final String id = 'home_screen';
 
   final String userId;
   HomeScreen({this.userId});

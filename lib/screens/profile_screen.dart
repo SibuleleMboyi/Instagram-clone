@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram/models/user_model.dart';
 import 'package:instagram/screens/edit_profile_screen.dart';
+import 'package:instagram/services/database_service.dart';
 import 'package:instagram/utilities/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +107,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 200.0,
                             child: FlatButton(
                               color: Colors.blue,
-                              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => EditProfileScreen(user: user))) ,
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                  builder: (_) => EditProfileScreen(
+                                    user: user,
+                                    updateUser: (User updateUser){
+                                      //Trigger state rebuild after editing profile
+
+                                      setState(() {
+                                        user = updateUser;
+                                      });
+                                    },
+
+                                  ))),
                               child: Text(
                                 'Edit Profile',
                                 style: TextStyle(
