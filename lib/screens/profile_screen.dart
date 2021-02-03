@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram/models/user_model.dart';
 import 'package:instagram/screens/edit_profile_screen.dart';
-import 'package:instagram/services/database_service.dart';
 import 'package:instagram/utilities/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -57,13 +56,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 0.0),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundColor: Colors.grey,
-                      backgroundImage: user.profileImageUrl.isEmpty 
-                          ? AssetImage('assets/images/user_placeholder.png')
-                          : CachedNetworkImageProvider(user.profileImageUrl),
-                    ),
+
+                        CircleAvatar(
+                          radius: 50.0,
+                          backgroundColor: Colors.grey,
+                          backgroundImage: user.profileImageUrl.isEmpty
+                              ? AssetImage('assets/images/user_placeholder.png')
+                              : CachedNetworkImageProvider(user.profileImageUrl),
+                        ),
+
+
                     Expanded(
                       child: Column(
                         children: [

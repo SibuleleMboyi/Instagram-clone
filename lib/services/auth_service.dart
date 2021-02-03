@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:instagram/models/user_data.dart';
 import 'package:instagram/utilities/constants.dart';
+import 'package:provider/provider.dart';
 
 class AuthService{
 
@@ -14,6 +16,7 @@ class AuthService{
            'name': name,
             'profileImageUrl': '',
          });
+         Provider.of<UserData>(context).currentUserId = signedInUser.uid;
         Navigator.pop(context);
       }
     }catch(e){
