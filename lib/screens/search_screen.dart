@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram/models/user_data.dart';
 import 'package:instagram/models/user_model.dart';
 import 'package:instagram/screens/profile_screen.dart';
 import 'package:instagram/services/database_service.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -19,13 +21,13 @@ class _SearchScreenState extends State<SearchScreen> {
       leading: CircleAvatar(
         radius: 20.0,
         backgroundImage: user.profileImageUrl.isEmpty
-            ? AssetImage('assets/images/user_placeholder.jpg')
+            ? AssetImage('assets/images/user_placeholder.png')
             : CachedNetworkImageProvider(user.profileImageUrl),
       ),
       title: Text(user.name),
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => ProfileScreen(userId: user.id),
+        MaterialPageRoute(builder: (_) => ProfileScreen( currentUserId: Provider.of<UserData>(context).currentUserId, userId: user.id),
         ),
       ),
     );
