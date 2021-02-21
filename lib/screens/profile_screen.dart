@@ -29,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int followerCount = 0;
   int followingCount = 0;
 
+
   void initState(){
     super.initState();
     _setUpIsFollowing();
@@ -156,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
 
           User user  = User.fromDoc(snapshot.data);
-          //print(user.email);
+          print(user.email);
 
           return ListView(
             children: [

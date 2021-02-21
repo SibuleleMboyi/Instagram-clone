@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:instagram/models/post_modle.dart';
+import 'package:instagram/models/post_model.dart';
 import 'package:instagram/models/user_model.dart';
 import 'package:instagram/utilities/constants.dart';
 
@@ -76,6 +76,21 @@ class DatabaseService{
     return followersSnapshot.documents.length;
   }
 
+  static Stream<List<Post>> getFeedPosts(String userId){
+    return feedsRef.document(userId)
+        .collection('userFeed')
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.documents.map((doc) => Post.fromDoc(doc)).toList());
+  }
+
+  static Future<User> getUserWithId(String userId) async{
+    DocumentSnapshot userDocSnapshot = await usersRef.document(userId).get();
+    if(userDocSnapshot.exists){
+      return User.fromDoc(userDocSnapshot);
+    }
+    return User();
+  }
 
 }
 
