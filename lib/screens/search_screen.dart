@@ -43,60 +43,63 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: TextField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-              border: InputBorder.none,
-              hintText: 'Search',
-              prefixIcon: Icon(Icons.search,size: 30.0),
-              suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: _clearSearch,
-              ),
-            filled: true,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                border: InputBorder.none,
+                hintText: 'Search',
+                prefixIcon: Icon(Icons.search,size: 30.0),
+                suffixIcon: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: _clearSearch,
+                ),
+              filled: true,
+            ),
+            onSubmitted: (input){
+              print(input);
+              if(input.isNotEmpty){
+                setState(() {
+                  _users = DatabaseService.searchUsers(input);
+                });
+              }
+
+            },
           ),
-          onSubmitted: (input){
-            print(input);
-            if(input.isNotEmpty){
-              setState(() {
-                _users = DatabaseService.searchUsers(input);
-              });
+        ),
+        body: _users == null
+            ? Center( child: Text('Search for a user'),)
+            : FutureBuilder(
+          future: _users,
+          builder: (context, snapshot){
+            if(!snapshot.hasData){
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
 
+            if(snapshot.data.documents.length == 0){
+              return Center(
+                child: Text(
+                    'No users founds! please try again.'
+                ),
+              );
+            }
+
+            return ListView.builder(
+              itemCount:  snapshot.data.documents.length,
+              itemBuilder: (BuildContext context, int index){
+                User user = User.fromDoc(snapshot.data.documents[index]);
+                return _buildUserTile(user);
+              },
+            );
           },
-        ),
-      ),
-      body: _users == null
-          ? Center( child: Text('Search for a user'),)
-          : FutureBuilder(
-        future: _users,
-        builder: (context, snapshot){
-          if(!snapshot.hasData){
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if(snapshot.data.documents.length == 0){
-            return Center(
-              child: Text(
-                'No users founds! please try again.'
-              ),
-            );
-          }
-
-          return ListView.builder(
-            itemCount:  snapshot.data.documents.length,
-            itemBuilder: (BuildContext context, int index){
-              User user = User.fromDoc(snapshot.data.documents[index]);
-              return _buildUserTile(user);
-            },
-          );
-        },
+        )
       ),
     );
   }
