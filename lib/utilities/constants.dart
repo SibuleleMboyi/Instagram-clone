@@ -11,3 +11,5 @@ final followersRef = firestore.collection('followers');
 final followingRef = firestore.collection('following');
 final feedsRef = firestore.collection('feeds');
 final likesRef = firestore.collection('likes');
+final commentsRef = firestore.collection('comments');
+final activitiesRef = firestore.collection('activities');

@@ -16,7 +16,7 @@ class Post{
     this.authorId,
     this.timestamp
   });
-
+  // factory constructor converts Firebase DocumentSnapshot to an Post Object
   factory Post.fromDoc(DocumentSnapshot doc){
     return Post(
       id: doc.documentID,

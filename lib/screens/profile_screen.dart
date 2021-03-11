@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram/models/post_model.dart';
 import 'package:instagram/models/user_data.dart';
 import 'package:instagram/models/user_model.dart';
+import 'package:instagram/screens/comments_screen.dart';
 import 'package:instagram/screens/edit_profile_screen.dart';
 import 'package:instagram/services/auth_service.dart';
 import 'package:instagram/services/database_service.dart';
@@ -152,7 +153,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _buildProfileInfo(User user){
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start, // just added
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 0.0),
@@ -287,9 +287,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _buildTilePost(Post post){
     return GridTile(
-      child: Image(
-        image: CachedNetworkImageProvider(post.imageUrl),
-        fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => CommentsScreen(
+              post: post,
+              likeCount: post.likeCount,
+            ),
+          ),
+        ),
+        child: Image(
+          image: CachedNetworkImageProvider(post.imageUrl),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -349,7 +360,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
               icon: Icon(Icons.exit_to_app),
-              onPressed: AuthService.logout),
+              onPressed: AuthService.logout
+          ),
         ],
       ),
 

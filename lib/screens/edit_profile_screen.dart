@@ -30,6 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
 
   void initState(){
+    super.initState();
     _name = widget.user.name;
     _bio = widget.user.bio;
   }
@@ -47,7 +48,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     //No new profile image
     if(_profileImage == null){
 
-      //No exisitng profile image
+      //No exisisting profile image
       if(widget.user.profileImageUrl.isEmpty){
         //Display placeholder
         return AssetImage('assets/images/user_placeholder.png');

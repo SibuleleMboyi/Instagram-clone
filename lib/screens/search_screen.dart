@@ -62,7 +62,6 @@ class _SearchScreenState extends State<SearchScreen> {
               filled: true,
             ),
             onSubmitted: (input){
-              print(input);
               if(input.isNotEmpty){
                 setState(() {
                   _users = DatabaseService.searchUsers(input);
